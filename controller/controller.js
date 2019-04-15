@@ -4,9 +4,10 @@ var path = require('path');
 
 
 
-//index
+//Rooting index
 router.get('/', function(req, res) {
-    res.redirect('/articles');
+    // res.redirect('/articles');
+    res.render('index');
 });
 
 
