@@ -1,6 +1,10 @@
 body{
-    background: url('../img/newsStand.jpg') repeat;
-    background-size: 600px;
+    background: url('../img/newsStand.jpg')no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    /* background-size: 1200px; */
     font-family: 'Oswald', sans-serif;
     font-size: 16px;
     display: flex;
