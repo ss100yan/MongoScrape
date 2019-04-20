@@ -1,39 +1,39 @@
-
+//dependencies
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var logger = require('morgan');
-var exphbs = require('express-handlebars');
+
+//initialize Express app
 var express = require('express');
-
-
 var app = express();
 
+app.use(logger('dev'));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 
+app.use(express.static(process.cwd() + '/public'));
 
-// Handlebars layout set up
 var exphbs = require('express-handlebars');
 app.engine('handlebars', exphbs({
   defaultLayout: 'main'
 }));
 app.set('view engine', 'handlebars');
-// Express static folder /public
-app.use(express.static(process.cwd() + '/public'));
+
+//connecting to MongoDB
+mongoose.connect('mongodb://<dbuser>:<dbpassword>@ds349455.mlab.com:49455/heroku_bwcnzgcm');
+
+// mongoose.connect('mongodb://localhost/scraped_news', { useNewUrlParser: true });
 
 
-// body parser
-app.use(bodyParser.urlencoded({
-    extended: false
-  }));
-
-
-
-
-
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('Connected to Mongoose!')
+});
 
 var routes = require('./controller/controller.js');
 app.use('/', routes);
-
-
 
 var port = process.env.PORT || 3000;
 app.listen(port, function(){

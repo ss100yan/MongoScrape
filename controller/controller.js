@@ -8,14 +8,15 @@ var request = require('request');
 var cheerio = require('cheerio');
 
 //Require models
-// var Comment = require('../models/Comment.js');
-var Article = require('../models/article.js');
+var Comment = require('../models/Comment.js');
+var Article = require('../models/Article.js');
 
 
 //Rooting index
 //index
 router.get('/', function(req, res) {
     res.redirect('/articles');
+    // res.render('index');
 });
 
 // router.get('/test-scrape', function(req, res) {
@@ -92,7 +93,7 @@ router.get('/scrape', function(req, res) {
 
 //this will grab every article an populate the DOM
 router.get('/articles', function(req, res) {
-    //allows newer articles to be on top
+    // allows newer articles to be on top
     Article.find().sort({_id: -1})
         //send to handlebars
         .exec(function(err, doc) {
@@ -103,31 +104,32 @@ router.get('/articles', function(req, res) {
                 res.render('index', artcl);
             }
     });
+    // res.render('index')
 });
 
 // This will get the articles we scraped from the mongoDB in JSON
-router.get('/articles-json', function(req, res) {
-    Article.find({}, function(err, doc) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(doc);
-        }
-    });
-});
+// router.get('/articles-json', function(req, res) {
+//     Article.find({}, function(err, doc) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             res.json(doc);
+//         }
+//     });
+// });
 
 //clear all articles for testing purposes
-router.get('/clearAll', function(req, res) {
-    Article.remove({}, function(err, doc) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('removed all articles');
-        }
+// router.get('/clearAll', function(req, res) {
+//     Article.remove({}, function(err, doc) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             console.log('removed all articles');
+//         }
 
-    });
-    res.redirect('/articles-json');
-});
+//     });
+//     res.redirect('/articles-json');
+// });
 
 router.get('/readArticle/:id', function(req, res){
   var articleId = req.params.id;
@@ -163,37 +165,37 @@ router.get('/readArticle/:id', function(req, res){
 });
 
 // Create a new comment
-router.post('/comment/:id', function(req, res) {
-  var user = req.body.name;
-  var content = req.body.comment;
-  var articleId = req.params.id;
+// router.post('/comment/:id', function(req, res) {
+//   var user = req.body.name;
+//   var content = req.body.comment;
+//   var articleId = req.params.id;
 
-  //submitted form
-  var commentObj = {
-    name: user,
-    body: content
-  };
+//   //submitted form
+//   var commentObj = {
+//     name: user,
+//     body: content
+//   };
  
   //using the Comment model, create a new comment
-  var newComment = new Comment(commentObj);
+//   var newComment = new Comment(commentObj);
 
-  newComment.save(function(err, doc) {
-      if (err) {
-          console.log(err);
-      } else {
-          console.log(doc._id)
-          console.log(articleId)
-          Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {'comment':doc._id}}, {new: true})
-            //execute everything
-            .exec(function(err, doc) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.redirect('/readArticle/' + articleId);
-                }
-            });
-        }
-  });
-});
+//   newComment.save(function(err, doc) {
+//       if (err) {
+//           console.log(err);
+//       } else {
+//           console.log(doc._id)
+//           console.log(articleId)
+//           Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {'comment':doc._id}}, {new: true})
+//             //execute everything
+//             .exec(function(err, doc) {
+//                 if (err) {
+//                     console.log(err);
+//                 } else {
+//                     res.redirect('/readArticle/' + articleId);
+//                 }
+//             });
+//         }
+//   });
+// });
 
 module.exports = router;
