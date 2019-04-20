@@ -28,7 +28,7 @@ app.set('view engine', 'handlebars');
 
 // mongoose.connect('mongodb://heroku_jxkjhg1v:6s68tem51mlionrj2sneb7b53c@ds127988.mlab.com:27988/heroku_jxkjhg1v');
 
-mongoose.connect('mongodb://heroku_bwcnzgcm:stoyan1234@ds349455.mlab.com:49455/heroku_bwcnzgcm');
+mongoose.connect('mongodb://ss100yan:superstoy1@ds349455.mlab.com:49455/heroku_bwcnzgcm');
   // 'mongodb://localhost/scraped_news', { useNewUrlParser: true });
 
 
