@@ -21,14 +21,14 @@ app.engine('handlebars', exphbs({
 app.set('view engine', 'handlebars');
 
 //connecting to MongoDB
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-mongoose.connect(MONGODB_URI);
+// mongoose.connect(MONGODB_URI);
 
 
 // mongoose.connect('mongodb://heroku_jxkjhg1v:6s68tem51mlionrj2sneb7b53c@ds127988.mlab.com:27988/heroku_jxkjhg1v');
 
-// mongoose.connect('mongodb://heroku_bwcnzgcm:<dbpassword>@ds349455.mlab.com:49455/heroku_bwcnzgcm');
+mongoose.connect('mongodb://heroku_bwcnzgcm:s12345678909@ds349455.mlab.com:49455/heroku_bwcnzgcm');
   // 'mongodb://localhost/scraped_news', { useNewUrlParser: true });
 
 
