@@ -26,10 +26,9 @@ var MONGODB_URI = process.env.MONGODB_URI || 'mongodb://ss100yan:superstoy1@ds34
 
 mongoose.connect(MONGODB_URI);
 
-
 // mongoose.connect('mongodb://ss100yan:superstoy1@ds349455.mlab.com:49455/heroku_bwcnzgcm');
   
-// 'mongodb://localhost/scraped_news', { useNewUrlParser: true });
+
 
 
 
