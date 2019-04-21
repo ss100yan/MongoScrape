@@ -1,19 +1,12 @@
 var express = require('express');
 var router = express.Router();
-
-
-
-//require request and cheerio to scrape
 var request = require('request');
 var cheerio = require('cheerio');
-
-//Require models
-
 var Article = require('../models/article.js');
 
 
 //Rooting index
-//index
+
 router.get('/', function(req, res) {
     res.redirect('/articles');
     // res.render('index');
@@ -24,9 +17,10 @@ router.get('/', function(req, res) {
 // A GET request to scrape the Verge website
 router.get('/scrape', function(req, res) {
     // First, we grab the body of the html with request
-    request('http://www.theverge.com/tech', function(error, response, html) {
+    request('https://www.theverge.com/entertainment', function(error, response, html) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
         var $ = cheerio.load(html);
+        console.log ($);
         var titlesArray = [];
         // Now, we grab every article
         $('.c-entry-box--compact__title').each(function(i, element) {
@@ -76,16 +70,16 @@ router.get('/scrape', function(req, res) {
             console.log('Not saved to DB, missing data')
           }
         });
-        // after scrape, redirects to index
+        
         res.redirect('/');
     });
 });
 
-//this will grab every article an populate the DOM
+// Populates index.handlebaes with all the saved articles saved in Mongo DB
 router.get('/articles', function(req, res) {
-    // allows newer articles to be on top
+    // sorts the newer articles to the top
     Article.find().sort({_id: -1})
-        //send to handlebars
+        
         .exec(function(err, doc) {
             if(err){
                 console.log(err);
@@ -94,7 +88,7 @@ router.get('/articles', function(req, res) {
                 res.render('index', artcl);
             }
     });
-    // res.render('index')
+    
 });
 
 
