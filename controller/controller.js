@@ -9,7 +9,7 @@ var cheerio = require('cheerio');
 
 //Require models
 
-var Article = require('../models/Article.js');
+var Article = require('../models/article.js');
 
 
 //Rooting index
