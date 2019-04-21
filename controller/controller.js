@@ -15,8 +15,8 @@ var Article = require('../models/Article.js');
 //Rooting index
 //index
 router.get('/', function(req, res) {
-    res.redirect('/articles');
-    // res.render('index');
+    // res.redirect('/articles');
+    res.render('index');
 });
 
 
