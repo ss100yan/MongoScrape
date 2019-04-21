@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var path = require('path');
+
 
 
 //require request and cheerio to scrape
@@ -8,7 +8,7 @@ var request = require('request');
 var cheerio = require('cheerio');
 
 //Require models
-var Comment = require('../models/Comment.js');
+
 var Article = require('../models/Article.js');
 
 
@@ -19,17 +19,7 @@ router.get('/', function(req, res) {
     // res.render('index');
 });
 
-// router.get('/test-scrape', function(req, res) {
-//   request(result.link, function(error, response, html) {
-//     var $ = cheerio.load(html);
 
-//     $('.l-col__main').each(function(i, element){
-//       var result = {};
-
-//       console.log($(this).children('.c-entry-content').children('p').text());
-//     });
-//   });
-// });
 
 // A GET request to scrape the Verge website
 router.get('/scrape', function(req, res) {
@@ -107,95 +97,6 @@ router.get('/articles', function(req, res) {
     // res.render('index')
 });
 
-// This will get the articles we scraped from the mongoDB in JSON
-// router.get('/articles-json', function(req, res) {
-//     Article.find({}, function(err, doc) {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             res.json(doc);
-//         }
-//     });
-// });
 
-//clear all articles for testing purposes
-// router.get('/clearAll', function(req, res) {
-//     Article.remove({}, function(err, doc) {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             console.log('removed all articles');
-//         }
-
-//     });
-//     res.redirect('/articles-json');
-// });
-
-router.get('/readArticle/:id', function(req, res){
-  var articleId = req.params.id;
-  var hbsObj = {
-    article: [],
-    body: []
-  };
-
-    // //find the article at the id
-    Article.findOne({ _id: articleId })
-      .populate('comment')
-      .exec(function(err, doc){
-      if(err){
-        console.log('Error: ' + err);
-      } else {
-        hbsObj.article = doc;
-        var link = doc.link;
-        //grab article from link
-        request(link, function(error, response, html) {
-          var $ = cheerio.load(html);
-
-          $('.l-col__main').each(function(i, element){
-            hbsObj.body = $(this).children('.c-entry-content').children('p').text();
-            //send article body and comments to article.handlbars through hbObj
-            res.render('article', hbsObj);
-            //prevents loop through so it doesn't return an empty hbsObj.body
-            return false;
-          });
-        });
-      }
-
-    });
-});
-
-// Create a new comment
-// router.post('/comment/:id', function(req, res) {
-//   var user = req.body.name;
-//   var content = req.body.comment;
-//   var articleId = req.params.id;
-
-//   //submitted form
-//   var commentObj = {
-//     name: user,
-//     body: content
-//   };
- 
-  //using the Comment model, create a new comment
-//   var newComment = new Comment(commentObj);
-
-//   newComment.save(function(err, doc) {
-//       if (err) {
-//           console.log(err);
-//       } else {
-//           console.log(doc._id)
-//           console.log(articleId)
-//           Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {'comment':doc._id}}, {new: true})
-//             //execute everything
-//             .exec(function(err, doc) {
-//                 if (err) {
-//                     console.log(err);
-//                 } else {
-//                     res.redirect('/readArticle/' + articleId);
-//                 }
-//             });
-//         }
-//   });
-// });
 
 module.exports = router;
