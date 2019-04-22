@@ -104,4 +104,18 @@ router.get('/articles', function(req, res) {
 
 
 
+router.get('/clearAll', function(req, res) {
+  Article.remove({}, function(err, doc) {
+      if (err) {
+          console.log(err);
+      } else {
+          console.log('removed all articles');
+      }
+
+  });
+  res.redirect('/');
+});
+
+
+
 module.exports = router;
