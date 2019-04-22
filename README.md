@@ -1,11 +1,5 @@
 # News Scraper 
 
-
-## Overview
-
-
-
-
 ## Getting started:
 
 * Clone the repo

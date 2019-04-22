@@ -5,7 +5,7 @@ var cheerio = require('cheerio');
 var Article = require('../models/article.js');
 
 
-//Rooting index
+
 
 router.get('/', function(req, res) {
     res.redirect('/articles');
@@ -14,21 +14,26 @@ router.get('/', function(req, res) {
 
 
 
-// A GET request to scrape the Verge website
+
 router.get('/scrape', function(req, res) {
-    // First, we grab the body of the html with request
+
+    // Grabing the body of the html with Axios
+
     axios.get('https://www.theverge.com/entertainment')
     .then((response) => {
         if(response.status === 200) {
         const html = response.data;
-        // Then, we load that into cheerio and save it to $ for a shorthand selector
-            const $ = cheerio.load(html); 
+
+        // Loading it into cheerio 
        
         console.log ($);
+
         var titlesArray = [];
-        // Now, we grab every article
+
+        // Grabing all the articles 
+
         $('.c-entry-box--compact__title').each(function(i, element) {
-            // Save an empty result object
+         
             var result = {};
 
             // Add the text and href of every link, and save them as properties of the result object
