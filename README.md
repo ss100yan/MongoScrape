@@ -1,5 +1,6 @@
 # News Scraper 
-   ## Miami Herald
+
+   * Miami Herald
 
    * Heroku: https://fast-dusk-83842.herokuapp.com
    

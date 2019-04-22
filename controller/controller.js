@@ -1,21 +1,22 @@
 const express = require('express');
-const router = express.Router();
 const axios = require('axios')
 const cheerio = require('cheerio');
 const Article = require('../models/article.js');
 
 
 
+module.exports = function (app) {
 
-router.get('/', function(req, res) {
+
+app.get('/', function(req, res) {
     res.redirect('/articles');
-    // res.render('index');
+  
 });
 
 
 
 
-router.get('/scrape', function(req, res) {
+app.get('/scrape', function(req, res) {
 
     // Grabing the body of the html with Axios
 
@@ -67,17 +68,10 @@ router.get('/scrape', function(req, res) {
 
                   }
             });
-        }
-        // Log that scrape is working, just the content was missing parts
-        else{
-          console.log('Article already exists.')
-        }
-
           }
-          // Log that scrape is working, just the content was missing parts
-          else{
-            console.log('Not saved to DB, missing data')
+             
           }
+         
         });
         
         res.redirect('/');
@@ -87,7 +81,7 @@ router.get('/scrape', function(req, res) {
 });
 
 // Populates index.handlebaes with all the saved articles saved in Mongo DB
-router.get('/articles', function(req, res) {
+app.get('/articles', function(req, res) {
     // sorts the newer articles to the top
     Article.find().sort({_id: -1})
         
@@ -104,7 +98,7 @@ router.get('/articles', function(req, res) {
 
 
 
-router.get('/clearAll', function(req, res) {
+app.get('/clearAll', function(req, res) {
   Article.remove({}, function(err, doc) {
       if (err) {
           console.log(err);
@@ -116,6 +110,6 @@ router.get('/clearAll', function(req, res) {
   res.redirect('/');
 });
 
+};
 
 
-module.exports = router;

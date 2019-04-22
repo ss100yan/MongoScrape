@@ -1,20 +1,18 @@
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 const exphbs = require('express-handlebars');
 
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
-
-app.use(express.static(process.cwd() + '/public'));
 
 
 
-app.engine('handlebars', exphbs({
-  defaultLayout: 'main'
-}));
+// Middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static(__dirname + '/public'));
+
+// Handlebars
+app.engine('handlebars', exphbs({ defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 
@@ -29,11 +27,14 @@ db.once('open', function() {
   console.log('Connected to Mongoose!')
 });
 
-const routes = require('./controller/controller.js');
-app.use('/', routes);
+// Routes
+require("./controller/controller")(app);
+ 
 
 const port = process.env.PORT || 3000;
 
 app.listen(port, function(){
   console.log('Listening on PORT ' + port);
 });
+
+module.exports = app;
