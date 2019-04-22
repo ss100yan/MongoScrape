@@ -29,35 +29,39 @@ app.get('/scrape', function(req, res) {
         const $ = cheerio.load(html); 
         console.log ($);
 
-        var titlesArray = [];
+        let titlesArray = [];
 
         // Grabing all the articles 
 
         $('.title').each(function(i, element) {
+
+            
          
-            var result = {};
+            let result = {i} ={
 
             // Add the text and href of every link, and save them as properties of the result object
-            result.title = $(this).children('a').text();
-            result.link = $(this).children('a').attr('href');
+            title: $(this).children().text(),
+            link: $(this).children().attr('href')
+                        
+            };
 
-            //ensures that no empty title or links are sent to mongodb
+            //no empty title or links
             if(result.title !== "" && result.link !== ""){
-              //check for duplicates
+              // no duplicates
               if(titlesArray.indexOf(result.title) == -1){
 
-                // push the saved title to the array 
+               
                 titlesArray.push(result.title);
 
-                // only add the article if is not already there
+                // no duplicate 
                 Article.count({ title: result.title}, function (err, test){
                     //if the test is 0, the entry is unique and good to save
                   if(test == 0){
 
-                    //using Article model, create new object
-                    var entry = new Article (result);
+                  
+                    const entry = new Article (result);
 
-                    //save entry to mongodb
+                   
                     entry.save(function(err, doc) {
                       if (err) {
                         console.log(err);
@@ -69,7 +73,7 @@ app.get('/scrape', function(req, res) {
                   }
             });
           }
-             
+           
           }
          
         });
@@ -80,16 +84,17 @@ app.get('/scrape', function(req, res) {
 }, (error) => console.log(err) );
 });
 
-// Populates index.handlebaes with all the saved articles saved in Mongo DB
+
 app.get('/articles', function(req, res) {
-    // sorts the newer articles to the top
+
+    // newer articles to the top
     Article.find().sort({_id: -1})
         
         .exec(function(err, doc) {
             if(err){
                 console.log(err);
             } else{
-                var artcl = {article: doc};
+                const artcl = {article: doc};
                 res.render('index', artcl);
             }
     });
