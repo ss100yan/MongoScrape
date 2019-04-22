@@ -19,7 +19,7 @@ router.get('/scrape', function(req, res) {
 
     // Grabing the body of the html with Axios
 
-    axios.get('https://www.theverge.com/entertainment')
+    axios.get('https://www.miamiherald.com/news/local/')
     .then((response) => {
         if(response.status === 200) {
         const html = response.data;
@@ -32,7 +32,7 @@ router.get('/scrape', function(req, res) {
 
         // Grabing all the articles 
 
-        $('.c-entry-box--compact__title').each(function(i, element) {
+        $('.title').each(function(i, element) {
          
             var result = {};
 
