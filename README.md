@@ -1,5 +1,7 @@
 # News Scraper 
 
+   * Heroku: [https://fast-dusk-83842.herokuapp.com]
+   
 ## Getting started:
 
 * Clone the repo
