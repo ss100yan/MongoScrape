@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var request = require('request');
+var axios = require('axios')
 var cheerio = require('cheerio');
 var Article = require('../models/article.js');
 
@@ -17,9 +17,13 @@ router.get('/', function(req, res) {
 // A GET request to scrape the Verge website
 router.get('/scrape', function(req, res) {
     // First, we grab the body of the html with request
-    request('https://www.theverge.com/entertainment', function(error, response, html) {
+    axios.get('https://www.theverge.com/entertainment')
+    .then((response) => {
+        if(response.status === 200) {
+        const html = response.data;
         // Then, we load that into cheerio and save it to $ for a shorthand selector
-        var $ = cheerio.load(html);
+            const $ = cheerio.load(html); 
+       
         console.log ($);
         var titlesArray = [];
         // Now, we grab every article
@@ -72,7 +76,9 @@ router.get('/scrape', function(req, res) {
         });
         
         res.redirect('/');
-    });
+   
+  }
+}, (error) => console.log(err) );
 });
 
 // Populates index.handlebaes with all the saved articles saved in Mongo DB
