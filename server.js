@@ -19,11 +19,11 @@ app.set('view engine', 'handlebars');
 
 
 
-var MONGODB_URI = process.env.MONGODB_URI || 'mongodb://ss100yan:superstoy1@ds349455.mlab.com:49455/heroku_bwcnzgcm';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://ss100yan:superstoy1@ds349455.mlab.com:49455/heroku_bwcnzgcm';
 
 mongoose.connect(MONGODB_URI);
   
-var db = mongoose.connection;
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Connected to Mongoose!')
