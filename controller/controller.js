@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var axios = require('axios')
-var cheerio = require('cheerio');
-var Article = require('../models/article.js');
+const express = require('express');
+const router = express.Router();
+const axios = require('axios')
+const cheerio = require('cheerio');
+const Article = require('../models/article.js');
 
 
 
@@ -25,7 +25,7 @@ router.get('/scrape', function(req, res) {
         const html = response.data;
 
         // Loading it into cheerio 
-       
+        const $ = cheerio.load(html); 
         console.log ($);
 
         var titlesArray = [];
