@@ -115,6 +115,13 @@ app.get('/clearAll', function(req, res) {
   res.redirect('/');
 });
 
+app.get('/saved_articles', function(req, res) {
+     
+  res.render('saved_articles');
+
+})
+
+
 };
 
 
