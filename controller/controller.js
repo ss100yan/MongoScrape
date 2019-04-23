@@ -121,6 +121,11 @@ app.get('/saved_articles', function(req, res) {
 
 })
 
+app.get('/save', function(req, res) {
+     
+  res.redirect('/');
+
+})
 
 };
 
